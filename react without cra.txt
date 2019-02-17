@@ -1,0 +1,58 @@
+https://www.youtube.com/watch?v=Zb2mQyQRwqc
+
+# file structure
+/app
+  index.html // must contain element with id used by ReactDom.render() in App.js, usually "root"
+  index.js
+  index.css
+/node_modules
+.gitignore
+package.json
+webpack.config.js
+ 
+
+# main dependencies
+npm i react react-dom
+
+# dev dependencies
+npm i --save-dev @babel/core @babel/preset-env @babel/preset-react webpack webpack-cli webpack-dev-server babel-loader css-loader style-loader html-webpack-plugin
+
+# webpack.config.js
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: './app/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'index_bundle.js'
+  },
+  module: {
+    rules: [
+      { test: /\.(js)$/, use: 'babel-loader' },
+      { test: /\.css$/, use: ['style-loader', 'css-loader'] }
+    ]
+  },
+  mode: 'development',
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'app/index.html'
+    })
+  ]
+}
+
+# in package.json, add babel presets
+{
+  ...
+  "babel": {
+    "presets: [
+      "@babel/preset-env",
+      "@babel/reset-react"
+    ]
+  },
+  ...
+}
+
+
+
+

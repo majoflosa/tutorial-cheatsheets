@@ -98,7 +98,9 @@ module.exports = {
 
 
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-Webpack for react (https://www.youtube.com/watch?v=A4swyDR45SY)
+Webpack for react 
+(https://www.youtube.com/watch?v=A4swyDR45SY)
+(https://www.youtube.com/watch?v=Zb2mQyQRwqc) Tyler McGinnis
 = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 npm i -D 
 webpack 
