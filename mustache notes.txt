@@ -1,0 +1,17 @@
+# create template
+<script type="text/template" id="myContent">
+  <div class="content">
+    <p>{{field1}}</p>
+    <p>{{field2}}</p>
+    <p>{{field3}}</p>
+  </div>
+</script>
+
+# get the template content
+var tlContent = $('#myContent').html();		// this returns html content inside a <script> tag
+
+# render the template
+var result = Mustache.render(tlContent, dataObj);
+
+# put resulting HTML in document
+$('#myDiv').html(result);

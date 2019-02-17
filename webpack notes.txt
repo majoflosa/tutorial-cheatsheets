@@ -1,0 +1,147 @@
+Webpack notes
+---------------
+# dev dependencies
+webpack
+webpack-cli
+webpack-dev-server
+@babel/core (former babel-core)
+babel-loader
+babel-preset-es2015 ? 	// deprecated 
+@babel/preset-env (former babel-preset-env)	// replaces -es2015
+style-loader
+css-loader
+sass-loader
+node-sass
+url-loader
+file-loader
+
+# basic config object
+entry: relative path to main js file
+output: {
+  path: path to folder where bundled file should end up
+  filename: name of bundled file (bundle.js or main.js)
+}
+devServer: {
+  contentBase: folder to use as root for server
+  port: port number
+  watchContentBase: true/false
+}
+module: {
+  rules: [
+    { test: regexp, loader (or use?): loader module, exclude: regexp of folder name to exclude }
+  ]
+}
+# use: [ { loader: loader, options: {} } ]
+
+
+= = = = = = = = = = = = = = = = = = = = = = = =
+ full example (from portfolio)
+= = = = = = = = = = = = = = = = = = = = = = = =
+# install dev dependencies
+npm i -D @babel/core @babel/preset-env babel-loader css-loader file-loader html-loader sass-loader style-loader webpack webpack-cli
+
+# webpack.config.js
+const path = require('path');
+const webpack = require('webpack');
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+// const envIsDev = process.env.NODE_ENV !== 'production';
+
+module.exports = {
+    entry: './src/js/index.js',
+    output: {
+        path: path.join( __dirname, '/dist/js' ),
+        filename: 'script.js'
+    },
+    devServer: {
+        contentBase: './dist',
+        publicPath: '/js/',
+        port: 8080,
+        watchContentBase: true,
+        compress: true,
+        // hot: true
+    },
+    // plugins: [ new webpack.HotModuleReplacementPlugin() ],
+    mode: process.env.NODE_ENV || 'production',
+    devtool: 'source-map',
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                exclude: /node_modules/,
+                query: {
+                    presets: ['@babel/env']
+                }
+            },
+            {
+                test: /\.sass$/,
+                use: [ 
+                    // envIsDev ? 'style-loader' : MiniCssExtractPlugin.loader, 
+                    'style-loader',
+                    'css-loader', 
+                    'sass-loader'
+                ]
+            },
+            {
+                test: /\.html$/,
+                loader: 'html-loader'
+            },
+            {
+                test: /\.(png|jpg|jpeg|gif)$/,
+                loader: 'file-loader'
+            }
+        ]
+    }
+};
+
+
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+Webpack for react (https://www.youtube.com/watch?v=A4swyDR45SY)
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+npm i -D 
+webpack 
+webpack-cli 
+webpack-dev-server 
+html-webpack-pluging@next 
+@babel/core 
+babel-loader
+@babel/preset-env
+@babel/preset-react
+@babel/plugin-proposal-class-properties
+@babel/polyfill // import this on entry file before any other code
+
+# webpack.config.env
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  devtool: 'source-map' or 'cheap-module-source-map',
+  module: {
+    rules: [
+      {test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader' }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html'
+    })
+  ]
+}
+
+# .babelrc
+{
+  "presets" : [
+    "@babel/env", "@babel/react"
+  ],
+  "plugins" : [
+    "@babel/plugin-proposal-class-properties"
+  ]
+}
+
+
+
+
+
+
+

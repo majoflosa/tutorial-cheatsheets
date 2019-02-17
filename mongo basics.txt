@@ -1,0 +1,62 @@
+Mongo Basics 
+
+INSTALLATION
+- Download MongoDB
+- copy files inside bin to /usr/local/bin
+  - cd downloads?/mongodb-osx-x86-64/bin
+  - cp * /usr/local/bin
+- make directory for databases (in OS root folder); mongo will look for /data/db to store its files
+  - sudo mkdir -p /data/db
+- change permissions for data dir for all users
+  - sudo chmod 777 /data
+  - sudo chmod 777 /data/db
+- start mongo server
+  - mongod
+- once server is running, in a new terminal window run mongo; to test, run simple command:
+  - db.users.insert({"name":"Mauricio"})
+
+Terminology
+- Collections: akin to tables
+- Documents: akin to rows/records
+
+
+Mongo Shell
+# see current database
+db
+
+# see all existing databases
+show dbs
+
+# create and switch to new database
+use [database_name]
+
+# see collections in current database (collections are akin to tables)
+show collections
+
+# normal javascript expressions can be used to interact with the shell
+
+db.[collection].insert({"key":"value"})		// insert a document in collection
+db.[collection].find()				// find all documents in collection
+db.[collection].find({"key":"value"})		// 
+
+Collection Methods
+===================
+show collections				// see all collections in db
+db.createCollection( string [collection name] )	// creates a new collections
+
+db.collection.insertMany( documents )		// insert multiple documents into a collection; takes an array
+db.collection.insertOne( document )		// inserts a single document into a collection
+db.collection.insert( document(s) )		// inserts a document or documents into a collection
+
+db.collection.find()				// select all documents in a collection
+db.collection.find({key: value})		// query documents that match specific equality conditions
+db.collection.find({key: {document}})		// match an embedded document
+db.collection.find({"field.subfield": "value"})	// match a field in embedded document
+db.collection.find({arr: "item"})		// match an element in an array
+db.collection.find({arr: [...items]})		// match an array exactly	
+
+
+
+
+
+

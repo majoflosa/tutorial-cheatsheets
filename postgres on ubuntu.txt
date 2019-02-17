@@ -1,0 +1,52 @@
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04
+
+
+sudo apt-get update
+sudo apt-get install postgresql postgresql-contrib
+
+= = = = = = = = = = = = = = = = 
+# setting up user and role
+= = = = = = = = = = = = = = = = 
+# The installation procedure created a user account called postgres that is associated with the default Postgres role.
+# switch to postgres user
+sudo -i -u postgres
+
+# access a Postgres prompt
+psql
+
+# exit psql
+postgres=# \q
+
+# you'll need a Linux user with the same name as your Postgres role and database.
+postgres@server~$ createdb mauro
+
+# Once logged in, you can get check your current connection information by typing:
+mauro=# \conninfo
+
+
+# enable postgres as service and start
+update-rc.d postgresql enable
+service postgresql start
+
+# check status
+service postgresql status
+
+
+# allow connections
+cd /etc/posgresql/[version]/main
+sudo nano pg_hb.conf
+
+# add new permission
+TYPE	DATABASE USER	ADDRESS		METHOD
+host	mauro	mauro	[ip address]	trust
+
+# listen for connection
+nano postgresql.conf
+#in connection settings
+listen_address = '[address]'  # can be * for all
+
+# restart service
+service postgresql restart
+
+
+

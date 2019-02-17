@@ -1,0 +1,100 @@
+LINUX FOR PHP
+
+Creating a Virtual Machine
+- Download and Install VirtualBox
+  - https://www.virtualbox.org/wiki/Downloads
+  - Course uses 5.1.22
+
+- Download Ubuntu Linux Server, LTS 64bit
+  - https://www.ubuntu.com/download/server
+  - course uses 16.04.2
+
+- Run VB and create virtual machine
+  - use most default settings, except fixed size hdd, adjust size
+
+- Optimize configuration
+  - System: 2 cpus, Enable PAE/NX
+  - Storage: add ubuntu server image on "Empty"
+  - Audio: disable audio
+  - Network: Port forwarding 
+    - Apache: Host 8080, Guest 80
+    - MySQL: Host 9306, Guest 3306
+    - MailCatcher: Host 1080, Guest 1080
+    - ssh: Host 2222, Guest 22
+  - Shared folder: add sandbox (or folder created to share)
+
+user: mauricio
+username: mauricio
+password: autrelangue_8891
+mysql password for root: autrelangue_8891
+ssh key location: Documents/miscellaneous/sb_key.pub
+
+Initial Server configuration
+# update current software
+sudo apt-get update
+# upgrade
+sudo apt-get upgrade -y
+# install packages
+apt-get install [package] [package]
+# after installing, rebooting may be necessary
+sudo reboot
+
+# virtualbox software
+- build-essential
+- virtualbox-dkms
+- module-assistant
+
+# additional software
+- nano
+- zip / unzip
+- curl (for downloading files and debugging HTTP requests)
+- man-db (displays manuals)
+- acpid (advanced configuration and power interface daemon)
+- git
+
+# VirtualBox Guest Additions
+Useful commands:
+- man (displays manual)
+- mount (attach the device file system to the file tree)
+- sh  
+- lsmod (statuses of modules in Linux Kernel)
+- reboot
+
+# permission commands
+- id
+- getent (gets entries from Name Service Switch libraries)
+- getent [database] [key]
+- usermod 
+
+
+Configuring Apache HTTP server
+- Apache configuration is in /etc/apache2/
+  - the apache2.conf file is the configuration file but it's best to have a separate configuration file
+- /sites-available: contains default and secure configuration files: 000-default.conf, default-ssl.conf
+- map virtualbox shared folder to FOLDER.dev
+- sudoedit allows file edits as root, but doesn't edeit the file directly - creates duplicate in tmp folder
+# configuration: create/remove symbolic links from sites-enabled directory; must reload apache to use changes
+- a2ensite: Apache2 enables the site
+- a2dissite: Apache2 disable site
+# modules: create/remove symbolic links from sites-enabled directory; must restart apache to use changes
+- a2enmod: Apache2 enables module
+- a2dismod: Apache2 disables module
+# must enable rewrite (for url rewriting) and vhost_alias (virtual host alias, dynamic virtual hosting for virtualbox)
+
+Configuring PHP for development
+- phpinfo.php
+- errors.php
+# create phpcustom.ini in mods-available; here options for error display, error logging, memory limits, upload size limits, etc. can be configured
+# php modules needed
+php-mcrypt php-intl php-sqlite3 php-mbstring php-xml php-gd
+# 2 of those need to be manually enabled after installing:
+sudo phpenmod mbstring simplexml
+# apache needs to restart for changes to take effect
+
+
+
+
+
+
+
+

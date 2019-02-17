@@ -1,0 +1,71 @@
+= = = = = = = = = = = = = = = = = 
+GENERALS
+= = = = = = = = = = = = = = = = = 
+# see existing databases
+SHOW DATABASES;
+
+# create database
+CREATE DATABASE db_name;
+
+# switch into db
+USE db_name
+
+# delete db
+DROP DATABASE db_name;
+
+# grant privileges to user
+GRANT ALL PRIVILEGES ON db_name.*
+TO 'username'@'localhost'
+IDENTIFIED BY 'password';
+
+# see privileges for user
+SHOW GRANTS FOR 'username'@'localhost'
+
+# log in to db as user
+mysql -u [username] -p [db name] [RETURN]
+[type password]
+
+
+= = = = = = = = = = = = = = = = = 
+TABLES
+= = = = = = = = = = = = = = = = = 
+# see tables on current database
+SHOW TABLES;
+
+# create new table
+CREATE TABLE table_name (
+  id INT(11) NOT NULL AUTO_INCREMENT,
+  name VARCHAR(30) NOT NULL,
+  age INT(3) NOT NULL,
+  living TINYINT(1) NOT NULL,
+  PRIMARY KEY (id)
+);
+
+# see columns
+SHOW COLUMNS FROM table_name;
+
+# delete table
+DROP TABLE table_name;
+
+= = = = = = = = = = = = = = = = = 
+CRUD
+= = = = = = = = = = = = = = = = = 
+# read
+SELECT * FROM table_name 
+WHERE column1 = 'some_text';
+
+# create
+INSERT INTO table_name (col1, col2, col3)
+VALUES (val1, val2, val3);
+
+# update
+UPDATE table
+SET column1 = 'some_text'
+WHERE id = 1;
+
+# delete
+DELETE FROM table_name
+WHERE col1 = value;
+
+
+

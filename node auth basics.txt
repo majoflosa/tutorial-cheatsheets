@@ -1,0 +1,22 @@
+# boilerplate
+
+# create a new user in db
+# 1. Create a form within a view
+# 2. Create route that'll process the form's post request
+# 3. Create db connection
+# 4. Grab form input and insert into db
+# 5. Add express-validation package
+# 6. Validate user input on backend
+# 7. Validate user input on frontend
+# 8. Hash out user's password
+# 9. Store user in db
+
+# login user (update user session, return auth cookie)
+# 1. install passport
+# 2. Configure passport with local strategy
+
+# protect routes and only permit entry with authorization cookie
+
+# create logout button
+
+# create login page

@@ -1,0 +1,79 @@
+# transform
+translate(x, y)
+translateX(100px)
+translateY(100px)
+translate3d(x, y, z)
+
+scale(x, y)
+scale3d(x,y,z)
+scaleX(2)
+scaleY(2)
+scaleZ(2)
+
+rotate(45deg)
+rotate3d(x, y, z, angle) 	// x, y, z are numbers (1, 4, 7, 20deg)
+rotateX(10deg)
+rotateY(10deg)
+rotateZ(10deg)
+
+skew(x-angle, y-angle)
+skewX(10deg)
+skewY(10deg)
+
+perspective(1000px)	// lower numbers create greater distortion
+
+transform-origin: x y	// property to set point around which transform occurs
+			// can be %, em, px, etc.
+
+# transition
+# multiple properties can be separated by comma
+
+transition: background 0.5s ease-in, color 0.2 ease-out;
+
+
+# define animation
+@keyframes myAnimation {
+  from { transform: translateX(0); }
+  to { transform: translateX(500px); }
+}
+
+@keyframes myAnimation {
+  0% { 
+	transform: translateX(0);
+  }
+  20% { 
+	transfrom: translateX(100px); 
+  }
+  100% { 
+	transform: transformX(600px); 
+  }
+}
+
+# assign defined animation to element
+myElement {
+  animation-name: myAnimation;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+  animation-iteration-count: 1;
+}
+
+# animation properties
+animation-name
+animation-duration		
+animation-timing-function	// ease, linear, ease-in, ease-out, ease-in-out
+				// cubic-bezier(x1, y1, x2, y2)
+				// steps(#) divides duration into # lapses of equal time
+animation-iteration-count
+animation-delay
+animation-fill-mode		// one of: none, backwards, forwards, both
+animation-direction		// normal, reverse, alternate, alternate-reverse
+animation-play-state		// can be paused or running (default)
+				// use with :hover or pseudo selectors to trigger with user input
+
+shorthand:
+animation: animation-name duration timing-function count
+animation: roll 3s ease-in-out infinite
+
+
+
+---

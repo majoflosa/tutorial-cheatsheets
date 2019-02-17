@@ -1,0 +1,11 @@
+Node Core Modules
+------------------
+path
+- path.basename(__filename) 	// outputs current filename
+- path.join(__dirname) 		// outputs path to current directory
+
+util
+- util.log(myVar)	// logs myVar with time/date info
+
+readline
+- 

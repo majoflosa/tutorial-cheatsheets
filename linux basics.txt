@@ -1,0 +1,200 @@
+# change directory
+cd path
+
+# print working directory
+pwd
+
+# list files in directory
+ls
+ls -l		// long format
+ls -h		// show sizes with prefixes
+ls -a		// show all, including hidden files
+
+# make directory
+mkdir [foldername]
+mkdir [foldername] [foldername]		// make more than 1 at a time
+mkdir -p [path/foldername]		// make directories inside directories (creates parent fir on the fly)
+
+# remove director
+rmdir [foldername]			// has to be empty
+
+#copy
+cp [filename] [destination]
+cp -r [filename] [destination]		// recursive copy, required with non-empty folders
+
+# move or rename
+mv [filename] [destination]
+
+# delete
+rm [filename]
+rm -r [filename]	// recursive delete, required with non-empty folders
+
+'*' means anything
+'?' represents any of one character - myfile?.txt means all files whose names have 1 character after 'myfile'
+
+# find files
+find [scope of search] 		// ex: find . searches all in current dir
+find [scope] -name "filename"	// searches by name, matching string
+
+# change file permissions
+# rwxrwxrwx = rwx | rwx | rwx = user | group | others
+# read=4, write=2, execute=1
+# ex: 7 = rwx (4+2+1); 5 = r-x (4+0+1)
+# therefore, ex: 754 = rwxr-xr--
+chmod [permission number] [filename]
+
+# see file contents
+cat [filename]
+cat -n [filename]		// shows numbered lines
+head [filename] 		// shows 1st 10 lines of text
+head -n 5 [filename]		// shows 1st 5 lines
+tail [filename]			// shows last 10 lines of files
+tail -n 5 [filename]		// shows last 5 lines of files
+less [filename]			// cat for long files, gives interface for scrolling and navigating content
+	[return]		// go forward one line
+	[space] or f		// scroll one page
+	b			// go back one page
+	q 			// quit
+
+# connect commands with pipes (|)
+# Warning: order matters
+cat [filename] | cat -n | tail -n 5
+
+# search content with grep
+grep "the" [filename] 		// shows lines where "the" is found; case sensitivity is default
+grep -i "the" [filename] 	// case insensitive
+grep -v "the" [filename]	// shows content hiding lines where "the" is found
+grep -E [regexp]		// shows lines where [regexp] matches
+
+# search for files in a directory
+find [directory]
+
+# combine find with grep to search files with specific words in its name
+find . | grep error
+
+# reboot
+(sudo) reboot
+
+# tar = tape archive files
+# zip files
+tar -cvf [filename] [directory(s) to include]	// -c = create archive
+						// -v = verbose (list everything)
+						// -f = compress into file
+ex:
+tar -cvf myfiles.tar somefolder/
+tar -caf myfiles.tar.gz somefolder/		// -a = ?
+tar -caf myfiles.tar.bz2 somefolder/
+
+# extract
+tar -xf [filename]e
+
+# exit
+logout
+shutdown -h now
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+Vim
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+vi		// open vim
+vim filename	// open file in vim
+
+i		// switch into insertion mode
+esc		// switch into command mode
+
+:w		// save file or "write"
+:w filename	// save new file
+:wq		// save and quit
+:q!		// quit without saving
+
+shift g		// move to bottom of the file
+( or {		// move up a line
+) or }		// move down a line
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+nano
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+Server administration
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+# apt is the package manager
+
+# find available updates
+sudo apt-get update
+
+# upgrade
+sudo apt-get upgrade
+sudo apt-get upgrade -y		// say yes to all
+
+#install software (use sudo)
+apt-get install [package] [package]
+
+# core software for LAMP stack
+VirtualBox integration
+- build-essential (tools for compiling)
+- virtualbox-dkms (dynamic kernel module support)
+- module-assistant
+
+Additional Software
+- nano
+- zip
+- unzip
+- curl
+- man-db
+- acpid (advanced configuration and Power interface daemon)
+- git
+
+# install apache
+apt-get install apache2
+
+# stop apache service
+apachectl stop
+
+
+# log files are located at /var/log
+
+# configuration files are stored in the /etc folder
+apache2
+php
+
+# dis/enable modules
+a2enmod [module]
+a2dismod [module]
+
+# ubuntu service management: apache may need to restart after dis/enabling modules
+# apache is installed as a service
+# service - runs script that manages service
+service [name] [action]
+service apache2 restart
+
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+User permissions
+= = = = = = = = = = = = = = = = = = = = = = = = = =
+# user - affects a specific user | group - affects a group of users
+# it's best practice to use group permissions and have the groups reflect their roles; less individual exceptions
+
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+Create user with sudo ability
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+- adduser [username]
+- usermod -aG sudo [username]
+
+# copy root's ~/.ssh/available_keys file and directory structure to our new user account
+rsync --archive --chown=username:username ~/.ssh /home/username
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+Transfer files with SCP
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+
+# from local to server
+scp /path/to/file username@ip:/path/to/destination
+
+# from server to local
+scp username@b:/path/to/file /path/to/destination

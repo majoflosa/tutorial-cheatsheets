@@ -1,0 +1,59 @@
+File Structure Example
+----------------------
+/
+/builds
+ /development
+   /css
+   /images
+   /js
+   index.html
+ /production
+   /css
+   /images
+   /js
+   index.html
+ /components
+   /sass
+   _variables.scss
+   _mixins.scss
+   _base.scss
+   style.scss
+   /coffee
+ /node_modules
+   .gitignore
+   gulpfile.js
+   package.json
+   readme.md
+
+
+Installs
+--------
+git 		// (installed)
+node		// (installed)
+ruby		// (installed)
+* update
+sass gem	// (installed)
+compass gem 	// (installed)
+gulp
+browserify	// (installed)
+
+
+Gulp plugins
+------------
+gulp-util		//
+gulp-concat		// used to combine files
+gulp-browserify		//
+gulp-compass		// for sass and compass
+gulp-connect		// sets up a server & allows automatic browser refresh
+gulp-if
+gulp-uglify
+gulp-jsonminify
+gulp-minify-html
+
+
+
+
+
+
+
+

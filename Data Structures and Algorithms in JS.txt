@@ -1,0 +1,44 @@
+Data Structures
+= = = = = = = = = 
+
+
+Stack: 
+- collection of elements where the last added element is the first one to be removed
+- Methods:
+  - push: add element (to the end)
+  - pop: remove element (the most recently added element), and returns popped element
+  - peek: get last added element
+  - length/size: get count of current elements
+
+Queue:
+
+
+Set:
+
+
+Binary Search Tree:
+
+
+Map:
+
+
+Hash Tables:
+
+
+Linked List:
+
+
+Trie:
+
+
+Heap:
+
+
+Graph:
+
+
+
+
+
+Algorithms
+= = = = = = = = =

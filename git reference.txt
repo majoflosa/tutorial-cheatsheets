@@ -1,0 +1,324 @@
+= = = = = = = = = = = = = = = = = = = = = = =
+Configuring
+= = = = = = = = = = = = = = = = = = = = = = =
+# System 
+git config --system
+
+# User
+git config --global
+
+# Project
+git config 
+
+# See configuration info
+git config --list 			// shows all
+git config user.name 			// shows user name
+git config --global color.ui true 	// set ui to render colors
+
+## example 1: set user name, email
+git config --global user.name "Mauricio Flores"
+git config --global user.email "mjf_mauricio@hotmail.com"
+git config --list
+## 
+
+# Help
+git help
+git help log
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Initializing a repository
+= = = = = = = = = = = = = = = = = = = = = = =
+# initialize: cd into the project root folder and enter:
+git init 
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Tracking changes
+= = = = = = = = = = = = = = = = = = = = = = =
+# make change, add change, commit change
+
+git add .			// adds change, (.) refers to current dir, can also be a file name
+git commit -m "Message" 	// commits change with message
+git commit -am "Message" 	// adds AND commits change(s) with message, doesn't work with 
+					new files and deletes
+git log 			// show log of commits (history)
+  git log -n 2			// limit commits logged to 2
+  git log --since=2017-07-17	// show commits since date
+  git log --until=2017-07-15	// show commits until date
+  git log --author="Mauricio"	// show commits of author
+  git log --grep="Init"		// show commits with regex matches
+  git log --oneline		// show commits summarized (partial hash, message)
+  git log --oneline -3		// shows last 3 summarized commits
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Making changes
+= = = = = = = = = = = = = = = = = = = = = = =
+# show differences between working repo, staging index, and repo
+git status
+
+# see changes made
+git diff		// see changes in working dir
+git diff --staged	// see changes in staging index
+git diff [hash]		// see changes between current working dir and dir at time of commit
+git diff [hash] [filename]
+git diff [hash]..[hash]
+git diff [hash]..[hash] [filename]
+git diff [hash]..HEAD
+git diff [branch]..[branch]
+git branch --merged
+
+# track deleting files
+git rm filename		// equivalent to "add", but for deletes.
+			// if file is not deleted on GUI, rm deletes file and stages change
+git rm --cached		// remove from staging index; stops tracking changes
+
+# moving/rename files
+git mv filename destination	// if done directly with git, moves file and stages change
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Undoing changes
+= = = = = = = = = = = = = = = = = = = = = = =
+# undo changes to working dir
+git checkout [something to checkout]	// changes named thing in working dir into repo version
+git checkout -- [filename]		// "--" commands to stay on current branch
+
+# unstaging
+git reset HEAD [filename]		// undoes staging
+
+# undo commit
+git commit --amend -m "message"		// edits last commit
+
+# retrieve old versions
+git checkout [hash] -- [filename]	// retrieves version of file from specified commit into staging index
+git commit -m "[hash] message"		// confirm retrieval into repository
+
+# revert commit
+git revert [hash]			// reverts commit
+
+# move head pointer back manually
+# USE WITH CAUTION
+git reset
+git reset --soft		// just moves head pointer
+git reset --mixed		// moves pointer and changes staging index to match repo; default
+git reset --hard 		// moves pointer, changes staging index and working dir
+
+# remove untracked files
+git clean -n			// show what would be removed (only working dir)
+git clean -f			// perform the clean
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Ignoring changes
+= = = = = = = = = = = = = = = = = = = = = = =
+# create file in root folder .gitignore
+# comments begin with #
+
+# ignore previously tracked file
+git rm --cached		// remove from staging index; stops tracking changes
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Navigting tree
+= = = = = = = = = = = = = = = = = = = = = = =
+# 'tree-ish' : a reference to a commit. Ways to reference a commit:
+# 	full SHA-1 hash
+# 	shortened SHA-1 hash (around 8 characters)
+# 	Head pointer
+# 	Branch reference
+# 	ancestry: parent commit (HEAD^, [hash]^, master^), grandparent (...^^), etc
+
+# view tree
+git ls-tree [tree-ish]
+
+# view commit
+git show [hash]			// shows full info of specified commit
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Branches
+= = = = = = = = = = = = = = = = = = = = = = =
+git branch			// shows list of branches
+git branch [name]		// creates new branch named [name]
+
+# switch to branches
+git checkout [name]		// switches to [name]
+git checkout -b [name]		// create new branch and switch to it
+
+#comparing branches
+git diff [branch]..[branch]
+git branch --merged		// shows list of branches contained in current branch
+
+# rename branch
+git branch -m [name] [new name]
+
+# delete branch
+git branch -d [name]
+git branch --delete [name]
+git branch -D [name] 		// confirm delete
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Merging Branches
+= = = = = = = = = = = = = = = = = = = = = = =
+# checkout (switch to) master branch, branch that will receive branch to be merged
+git merge [branch name]
+
+# fast forward merge: if master has not diverged git points to latest commit of feature branch
+  instead of creating new commit
+git merge --no-ff [branch name]		// commands not to do a fast forward merge;
+git merge --ff-only [branch name]	// only performs merge if fast forward is possible
+
+# true merge: if master has a new commit that feature branch doesn't, ff isn't possible
+
+# merge conflict: both branches have different changes on same line in same file
+git merge --abort 			// cancels pending merge after conflict
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Stashing Changes
+= = = = = = = = = = = = = = = = = = = = = = =
+# save into stash
+git stash save "Message"
+
+# see stashed changes
+git stash list				// show stashed changes
+git stash show stash@{0}		// see specified stash
+git stash show -p stash@{0}		// show specified stash as diff
+
+# retrieving stashed changes
+# if stash is not specified, default is first stash
+git stash pop stash@{0}			// pulls change into working dir, deletes stash
+git stash apply	stash@{0}		// pulls change into working dir, leaves stashed copy
+
+# delete stash changes
+git stash drop stash@{0}
+git stash clear				// delete all stashed changes
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Remotes
+= = = = = = = = = = = = = = = = = = = = = = =
+# create repo on github
+
+# add remote to existing local repo
+git remote add [alias] [url]
+git remote add origin [url]
+
+# see remote(s)
+git remote			// shows remote
+git remote -v			// shows remote with info where to push and fetch
+
+# delete remote
+git remote rm [name]		// name is typically origin
+
+# push branch (commit) to remote
+git push -u origin [branch]
+git push			// assumes where on following pushes
+
+# see remote branches
+git branch -r
+git branch -a		// both local and remote
+
+# clone remote repo
+git clone [url]
+git clone [url] [local path]
+
+# fetch changes; syncs remote and origin/master
+# tips: fetch before you work, before you push, fetch often
+git fetch origin
+git fetch
+
+# merge fetched changes into local master
+# origin/master is a local branch that has been synched with remote
+git fetch
+git merge origin/master
+
+git pull = git fetch + git merge
+
+# create local branch from a remote branch
+git branch [branch name] origin/[branch name]	// starts branch from local synced branch
+git branch -b [branch name] origin/[branch name] // create and checkout branch
+
+# delete branch
+git push origin :[branch]
+git push origin --delete [branch]
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Collab workflow
+= = = = = = = = = = = = = = = = = = = = = = =
+# get into local branch where I'll be working
+> git checkout master
+
+# sync origin master with remote; see changes collaborators have done recently
+> git fetch
+
+# merge these changes with my repo
+> git merge origin/master
+
+# start working on my own branch
+> git checkout -b [branch name]
+> git commit -m "message"
+
+# find if more commits have been done before pushing
+> git fetch
+
+# push new branch to remote
+> git push -u origin [branch name]
+
+# -- Collab's view --
+> git checkout master
+
+# they sync remote changes to their local
+> git fetch
+> git merge origin/master
+
+# create branch to copy new branch in origin
+> git checkout -b [branch name] origin/[branch name]
+
+# review the changes
+> git log
+> git show [hash]
+
+# makes change and commits
+> git commit -am "message"
+
+# checks for new commits on remote repo
+> git fetch
+
+# pushes reviewed changes
+git push
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Connecting to github (self taught)
+= = = = = = = = = = = = = = = = = = = = = = =
+# establish connection
+ssh -T git@github.com
+
+# clone remote repository
+git clone [url of repo to clone]	// copies repo to current working dir
+git init				// initialize git in local project
+
+# add origin url
+git remote add origin [url]		// sets url where to push
+
+# push files after making, adding, committing changes
+# https://git-scm.com/docs/git-push#_examples
+git push -u origin master
+
+# push
+
+# fetch
+
+
+
+= = = = = = = = = = = = = = = = = = = = = = =
+Pull one specific directory
+= = = = = = = = = = = = = = = = = = = = = = =
+git init
+git remote add -f origin <url>
+git config core.sparsecheckout true
+echo <dir1>/ >> .git/info/sparse-checkout
+echo <dir2>/ >> .git/info/sparse-checkout
+echo <dir3>/ >> .git/info/sparse-checkout
+git pull origin master

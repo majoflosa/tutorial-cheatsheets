@@ -1,0 +1,64 @@
+CSS Grid
+
+# grid container: the element containing a grid defined by setting display: grid;
+# grid item: direct descendant of the grid container
+# grid line: the horizontal or vertical line separating the grid into sections; referenced by number, starting
+  and ending with the other borders of the grid
+# grid cell: intersection between a grid row and column
+# grid track: space between two or more adjacent grid lines
+# grid area: rectangular area between four specified grid lines; can cover one or more cells
+# grid gap: empty space between grid tracks; also called gutter
+
+# makes children line up as grid
+  display: grid;
+# create columns; use any measurement unit (%, px, em, etc)
+  grid-template-columns: 50% 50%	// creates 2 columns of 50% width each
+  grid-template-columns: 25% 50% 25%	// creates 3 columns
+  grid-template-columns: 28% auto	// auto takes up whatever width it can
+  grid-template-columns: 1fr 1fr 2fr	// fr = fraction
+  grid-template-columns: repeat(2, 1fr) 2fr	// result is same as above
+// minmax(50px, 600px) makes sure column is never less than 50px nor more than 600px
+# rows use the same as columns with grid-template-rows
+
+# grid gap
+  grid-gap: 15px
+  grid-column-gap: 10px
+  grid-row-gap: 20px
+
+# placing items on the grid; apply to grid-items
+  grid-column: 2/4	// numerator is beginning grid line; denominator is ending grid line
+  grid-row: 2/3
+# name grid lines
+  grid-template-columns: [begin-edge] 2fr [halfway] 1fr [quarter] 1fr [end-edge]
+// then in grid item:
+  grid-column: halfway/end-edge = 2/4
+
+# grid areas
+.container
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 3fr
+  grid-template-areas:
+    "title title title"
+    "main masthead masthead"
+    "main sidebar footer"
+
+.title
+  grid-area: title;
+
+.main
+  grid-area: main;
+
+.masthead
+  grid-area: masthead;
+
+.sidebar
+  grid-area: sidebar
+
+.footer
+  grid-area: footer
+
+
+
+
+

@@ -1,0 +1,126 @@
+= = = = = = = = = = = = = = = = = = = = = =
+Manipulating the DOM
+= = = = = = = = = = = = = = = = = = = = = =
+# select by id
+var myElement = document.getElementById('someId');
+
+myElement.nodeType	// returns 1 (element), 2(attribute), 3(text)
+myElement.nodeName	// returns (tag) name of node as string
+myElement.attributes	// array of node attributes
+myElement.nodeValue	// element inside a node
+myElement.innerHTML	// returns inner html; can be set like any var
+myElement.childNodes	// returns # of child nodes
+
+# select by tag; returns array
+var myElements = document.selectElementsbyTagName('a');
+myElements[#] 		// access individual items;
+
+#restricting elements to retrieve
+var myListItems = myElement.getElementsByTagName('li');
+
+# select by class name; not compatible with earlier browsers
+var myElements = document.getElementsByClassName('class-name');
+
+# querying css selectors
+var myElement = document.querySelector('selector');		// returns 1st element that matches
+var myElements = document.querySelectorAll('selector');		// returns all elements that match
+
+# working with attributes
+myElement.getAttribute('src');
+myElement.setAttribute('src', 'value');
+myElement.hasAttribute('src');
+myElement.removeAttribute('src');
+
+# HTML5 data attributes
+# for element <span data-foo="bar">
+myElement.dataset.foo			// returns "bar"; can be set like var
+
+# creating elements & text nodes
+var myNewElement = document.createElement("li");	// 'registers' element
+myElement.appendChild(myNewElement);
+
+var myText = document.createTextNode("New List item text");
+myNewElement.appendChild(myText);
+
+# alternative to appendChild
+parent.insertBefore(newElement, existingElement);
+
+# forms
+document.forms			// contains array of all forms
+document.[form name]		// contains form whose name attribute is [form name]
+document.[form name].[name]	// contains input element in specified form whose name is [name]
+document.[form name].[name].value	// contains value of specified element; can be set like var
+document.[form name].[name].selectedIndex	// contains # indicating what currently selected
+							option
+
+# traversing the dom
+myElement.parentNode
+myElement.childNodes (array)
+myELement.firstChild
+myELement.lastChild
+myElement.previousSibling
+myElement.nextSibling
+
+
+= = = = = = = = = = = = = = = = = = = = = =
+CSS with JS
+= = = = = = = = = = = = = = = = = = = = = =
+myElement.style.property = 'value';
+
+# note: 'class' in js is className. class is a reserved word
+
+= = = = = = = = = = = = = = = = = = = = = =
+Timers
+= = = = = = = = = = = = = = = = = = = = = =
+# execute function once after x amount of ms
+setTimeout(functionName, milliseconds);		// returns
+
+# execute function repeatedly every x amount of seconds
+setInterval(functionName, milliseconds);	//
+
+# clear timers: store timeout command in variable to clear later
+var timerHandler = setTimeout(functionName, milliseconds
+clearTimeout(timerHandler);
+
+var timerHandler = setInterval(functionName, milliseconds);
+clearInterval(timerHandler);
+
+
+= = = = = = = = = = = = = = = = = = = = = =
+AJAX
+= = = = = = = = = = = = = = = = = = = = = =
+var request = new XMLHttpRequest();
+request.open( str method, str pathtoFile, bool async);
+request.send();
+
+# some properties and methods
+request.status
+request.response
+request.responseText
+request.readyState
+request.onreadystatechange		// takes function that checks ajax call happening; useful
+console.log(request) to see all request properties and methods
+
+# backwards compatibility
+var request;
+if (window.XMLHttpRequest) {
+  request = new XMLHttpRequest();
+} else {
+  request = new ActiveXObject('Microsoft.XMLHTTP');
+}
+
+# jQuery Ajax
+# Alternative 1
+$(selector).load('data.txt');
+
+# Alternative 2
+$.getJSON('data.json', function(data){
+  //  do something with data
+});
+
+# Alternative 3
+$.ajax();
+
+
+
+

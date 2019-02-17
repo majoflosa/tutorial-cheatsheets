@@ -1,0 +1,84 @@
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+Create user with sudo ability
+= = = = = = = = = = = = = = = = = = = = = = = = = = 
+- adduser [username]
+- usermod -aG sudo [username]
+
+# copy root's ~/.ssh/available_keys file and directory structure to our new user account
+rsync --archive --chown=username:username ~/.ssh /home/username
+
+# update and upgrade
+sudo apt-get update
+sudo apt-get upgrade -y
+
+# install nginx
+sudo apt-get install nginx
+# start nginx
+sudo service nginx start
+
+# find configuration files at /etc/nginx
+# find main configuration file at /etc/nginx/sites-available/default
+
+# install git
+sudo apt-get install git
+
+# install node and npm
+sudo apt-get install nodejs npm
+
+# make symbolic link to make nodejs = node
+sudo ln -s /usr/bin/nodejs /usr/bin/node
+
+# make a web directory, if one doesn't exist; git repos can be cloned here
+sudo mkdir -p /var/www
+
+# OPTIONAL: change ownership of the web directory to the current user 
+# ($USER is not a placeholder, it's a reference to current user)
+sudo chown -R $USER:$USER /var/www
+
+# configure nginx server to redirect to app's port
+sudo nano /etc/nginx/sites-available/default
+
+location / {
+  proxy_pass http://127.0.0.1:3001;
+}
+
+# restart nginx
+sudo service nginx restart
+
+# for npm global installs
+# (https://docs.npmjs.com/getting-started/fixing-npm-permissions)
+sudo mkdir -p /usr/local/lib/node_modules
+
+ ## find path to npm's directory; should be /usr/local
+npm config get prefix
+ ## change ownership of npm's directories to name of the current user
+sudo chown -R $(whoami) $(npm config get prefix)/{lib/node_modules,bin,share}
+
+# keep app running with Forever
+
+# install forever
+npm i -g forever
+
+# start server (assume main file is index.js)
+forever start index.js
+
+# stop a forever server
+forever stopall
+
+# make directory for forever log files
+sudo mkdir /var/log/forever
+
+# change ownership of log folder
+sudo chown -R $USER /var/log/forever
+
+# start forever logging output
+forever start index.js >> /var/log/forever/forever.log
+
+
+# scan a server's open ports
+nmap [IP_ADDRESS]
+
+
+
+
+
