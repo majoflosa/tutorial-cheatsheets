@@ -44,6 +44,9 @@ CREATE TABLE table_name (
 # see columns
 SHOW COLUMNS FROM table_name;
 
+# show table structure
+DESCRIBE table_name;
+
 # delete table
 DROP TABLE table_name;
 
@@ -67,5 +70,12 @@ WHERE id = 1;
 DELETE FROM table_name
 WHERE col1 = value;
 
+
+= = = = = = = = = = = = = = = = = 
+Create user with access to a db
+= = = = = = = = = = = = = = = = =
+CREATE USER 'todouser'@'localhost' IDENTIFIED BY 'todo1234';
+GRANT ALL PRIVILEGES ON todo_db.* TO 'todouser'@'localhost';
+FLUSH PRIVILEGES;
 
 

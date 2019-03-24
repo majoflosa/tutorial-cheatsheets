@@ -1,0 +1,28 @@
+WordPress
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+THEME DEVELOPMENT
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+# Minimal file structure
+- index.php
+- style.css
+- functions.php
+- header.php
+- footer.php
+- page.php
+- single.php
+- search.php
+- archive.php
+- 404.php
+
+# functions.php
+- setup function: 
+  - add theme support, register nav menus
+  - use 'after_setup_theme' action hook
+- widgets init function:
+  - register widgets with register_sidebar()
+  - use 'widgets_init' action hook
+- load scripts function
+  - enqueue styles and scripts
+  - use 'wp_enqueue_scripts' action hook
+
