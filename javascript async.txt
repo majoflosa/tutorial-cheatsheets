@@ -1,0 +1,107 @@
+Async JS
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+Promises
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+
+
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+Iterators
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+# functions that are able to treat collections of data as a continuous flow
+# they return an object with a .next() function that returns the next value
+# .next is returned along with the scope it was created in (closure)
+
+function createFlow(array) {
+  let i = 0;
+  return {
+    next: function() {
+      const element = array[i];
+      i++;
+      return element;
+    },
+    done: array[i] !== undefined
+  } 
+}
+
+const returnNextElement = createFlow([4, 5, 6]);
+const element1 = returnNextElement.next(); // 4
+const element2 = returnNextElement.next(); // 5
+
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+Generators
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+# allow us to create declare functions that yield a value, and to continue their 
+execution context with the invocation of the .next() method on the yielded value
+
+function *createFlow() {
+  yield 4;
+  yield 5;
+  yield 6;
+} 
+
+const returnNextElement = createFlow();
+const element1 = returnNextElement.next() // 4
+const element2 = returnNextElement.next() // 5
+
+# when yield is on the right side of an assignment, we can pass in a value as a
+parameter on .next(), that takes the place of the assignment expression, before
+the execution continues
+
+function *createFlow() {
+  const num = 10;
+  const newNum = yield num;
+  yield 5 + newNum;
+  yield 6;
+}
+
+const returnNextElement = createFlow();
+const element1 = returnNextElement.next() // 10
+const element2 = returnNextElement.next(2) // 7
+
+# we can use async features in a generator allowing us to resume the function
+only when a promise is resolved
+
+function doWhenDataReceived(value) {
+  returnNextElement.next(value);
+}
+
+function *createFlow() {
+  const data = yield fetch( 'http://someapi.com/data' );
+  console.log(data);
+}
+
+const returnNextElement = createFlow();
+const futureData = returnNextElement.next(); // Promise
+
+futureData.then( doWhenDataReceived );
+
+
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+Async/Await
+= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+# async functions are basically async generators, that automate the continuation
+of the execution when the awaited promise resolves
+
+async function createFlow() {
+  console.log('First');
+  const data = await fetch( 'http://someapi.com/data' );
+  console.log(data);
+}
+
+createFlow();
+console.log('Second');
+
+/* 
+console: 
+First
+Second
+data
+*/
+
+
